@@ -1,0 +1,26 @@
+{
+  "name": "abacus-sync",
+  "version": "1.0.0",
+  "description": "Abacus to SoftLedger sync take-home",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "sync": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

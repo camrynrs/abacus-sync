@@ -45,14 +45,25 @@ The project writes to a SQLite database using `better-sqlite3`.
 
 ---
 
-## Edge Cases
+## Edge Cases & Decisions
 
-- If the foreign key is missing, then the record is skipped to maintain referential integrity  
-- If the dates are invalid or missing, then throw an error during mapping  
-- If an error happens on one or more records, the sync continues  
-- Error logging capped via SYNC_LOG_ERRORS  
-- Payments expanded into multiple rows per allocation  
-- Upserts used to ensure idempotency  
+- Missing foreign keys (e.g. bill references a missing vendor)  
+  Record is skipped to maintain referential integrity and avoid inserting invalid relationships.
+
+- Invalid or missing dates  
+  Mapping throws an error to prevent corrupt or misleading data from being stored. 
+
+- Partial failures  
+  Errors are handled on a per-record basis so a single bad record does not stop the entire sync from occurring. 
+
+- Error logging  
+  Logging is capped via SYNC_LOG_ERRORS to keep logs useful without overwhelming output.  
+
+- Payments with multiple allocations  
+  Expanded into multiple rows so each payment maps cleanly to a single bill in the relational schema.
+
+- Upserts  
+  Used to ensure idempotency, allowing the sync to be safely re-run without creating duplicates  
 
 ---
 
